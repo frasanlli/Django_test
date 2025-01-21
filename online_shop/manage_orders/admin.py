@@ -11,6 +11,15 @@ class Admin_costumer(admin.ModelAdmin):
     list_display = ("name","address", "phone")
     search_fields = ("name", "phone")
 
+#To add filters in one side of the admin
+class Admin_item(admin.ModelAdmin):
+    list_filter=("category",)
+
+#If filtered by date, it is done by time periods
+class Admin_order(admin.ModelAdmin):
+    list_filter=("number", "date",)
+    list_filter=("date",)
+
 admin.site.register(Costumers, Admin_costumer)
-admin.site.register(Items)
-admin.site.register(Orders)
+admin.site.register(Items, Admin_item)
+admin.site.register(Orders, Admin_order)
