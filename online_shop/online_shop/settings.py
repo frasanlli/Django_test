@@ -136,3 +136,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Configuration to send mails with gmail
+#It is necessary to change settings in email to allow smtp
+
+#Gmail needs OAuth verification since 01/2025 and tests with Outlook app's password seems to not work
+#So I used mailtrap due does not require personal data to test in
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 2525
+DEFAULT_FROM_EMAIL = PConstants.DEFAULT_FROM_EMAIL
+EMAIL_HOST_USER = PConstants.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = PConstants.EMAIL_HOST_PASSWORD
+NOTIFY_EMAIL = PConstants.NOTIFY_EMAIL

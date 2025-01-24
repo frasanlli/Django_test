@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <head>
+            <title>Contact form</title>
+        </head>
+
+        <body>
+            <h1>Contact us</h1>
+            <form action="/contact/" method="POST">{% csrf_token %}
+
+                <p>Your e-mail:<input type="text" name="email"></p>
+                <p>Subject:<input type="text" name="subject"></p>
+                <p>Message:</p>
+                <p><textarea name="content" rows="15" cols="45"></textarea></p>
+
+                <input type="submit" value="Send">
+            </form>
+        </body>
+</html>

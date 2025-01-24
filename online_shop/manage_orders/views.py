@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.conf import settings
 from manage_orders.models import Items
 
 # Create your views here.
@@ -29,3 +31,22 @@ def search(request):
         message = "Empty search"
 
         return HttpResponse(message)
+
+def contact (request):
+
+    if request.method == "POST":
+        subject = request.POST["subject"]
+        message = request.POST["content"]
+        from_email = request.POST["email"]
+        recipient_list = [settings.NOTIFY_EMAIL]
+
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=from_email,
+            recipient_list=recipient_list)
+
+        return render(request, "thanks.html")
+
+
+    return render(request, "contact.html")
