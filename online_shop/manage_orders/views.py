@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.conf import settings
 from manage_orders.models import Items
+from manage_orders.forms import Contact_form
 
 # Create your views here.
 
@@ -34,19 +35,26 @@ def search(request):
 
 def contact (request):
 
+    recipient_list = [settings.NOTIFY_EMAIL]
+
     if request.method == "POST":
-        subject = request.POST["subject"]
-        message = request.POST["content"]
-        from_email = request.POST["email"]
-        recipient_list = [settings.NOTIFY_EMAIL]
 
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=from_email,
-            recipient_list=recipient_list)
+        my_form = Contact_form(request.POST)
 
-        return render(request, "thanks.html")
+        if my_form.is_valid():
+
+            form_info = my_form.cleaned_data
+            send_mail(
+                subject = form_info['subject'],
+                message = form_info['message'],
+                from_email = form_info.get('email', ''),
+                recipient_list = recipient_list)
+
+            return render(request, "thanks.html")
+
+    else:
+
+        my_form = Contact_form()
 
 
-    return render(request, "contact.html")
+    return render(request, "contact.html", {"form":my_form})

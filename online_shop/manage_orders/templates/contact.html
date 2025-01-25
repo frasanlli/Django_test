@@ -6,14 +6,26 @@
 
         <body>
             <h1>Contact us</h1>
-            <form action="/contact/" method="POST">{% csrf_token %}
 
-                <p>Your e-mail:<input type="text" name="email"></p>
-                <p>Subject:<input type="text" name="subject"></p>
-                <p>Message:</p>
-                <p><textarea name="content" rows="15" cols="45"></textarea></p>
+            {% if form.errors %}
 
-                <input type="submit" value="Send">
+            <p style="color: red;"> Please check the data of each field</p>
+
+            {% endif %}
+
+
+            <form action="" method="POST">{% csrf_token %}
+
+                <table>
+
+                    {{form.as_table}}
+
+                 </table>
+
+                 <input type="submit" value="send">
+
             </form>
+
+
         </body>
 </html>
